@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070518">
+  <title>Feliz cumpleaños</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="galaxia" role="img" aria-label="Planeta hecho de girasoles que gira, con un anillo de frases y un jardín de girasoles"></canvas>
+  <div class="velo" aria-hidden="true"></div>
+
+  <h1 class="solo-lectores" id="titulo">Feliz cumpleaños</h1>
+
+  <main class="mensaje">
+    <p class="frase" id="frase" aria-live="polite"></p>
+    <p class="fecha" id="fecha">23 de setiembre</p>
+     <p class="fecha" id="fecha">FELIZ CUMPLEAÑOS LEYDI </p>
+  </main>
+
+  <button class="boton" id="pantalla" type="button" aria-label="Pantalla completa">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
+    </svg>
+  </button>
+
+  <!-- Pantalla inicial: se abre con un toque -->
+  <div class="regalo" id="regalo">
+    <div class="orbe" aria-hidden="true"></div>
+    <p class="regalo-texto" id="regaloTexto">Para ti</p>
+    <button class="abrir" id="abrir" type="button">Toca para abrir tu regalo</button>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

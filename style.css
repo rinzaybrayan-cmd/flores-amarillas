@@ -1,0 +1,209 @@
+:root {
+  --noche: #070518;
+  --noche-media: #17103d;
+  --violeta: #2f2170;
+  --ciruela: #5b2a72;
+  --oro: #f5b400;
+  --marfil: #fff6d6;
+  --marfil-suave: #ecd47f;
+  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--noche);
+  /* Nebulosa: manchas suaves de color detrás del planeta */
+  background-image:
+    radial-gradient(ellipse 60% 45% at 26% 28%, rgba(91, 42, 114, 0.4), transparent 70%),
+    radial-gradient(ellipse 55% 45% at 76% 66%, rgba(47, 33, 112, 0.55), transparent 70%),
+    radial-gradient(ellipse at 50% 44%, var(--noche-media) 0%, var(--noche) 75%);
+  color: var(--marfil);
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+}
+
+body.arrastrando canvas { cursor: grabbing; }
+
+/* Viñeta: oscurece los bordes para dirigir la mirada al centro */
+.velo {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 46%, transparent 55%, rgba(4, 3, 16, 0.65) 100%);
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Mensajes de abajo ---------- */
+.mensaje {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 24px calc(clamp(22px, 5vh, 48px) + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+}
+
+body.abierto .mensaje {
+  opacity: 1;
+  transition: opacity 2s ease 3s;
+}
+
+.frase {
+  margin: 0;
+  min-height: 1.25em;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(28px, 4.8vw, 54px);
+  line-height: 1.15;
+  color: var(--marfil);
+  text-shadow: 0 0 34px rgba(245, 180, 0, 0.3), 0 2px 22px rgba(7, 5, 24, 0.95);
+}
+
+.pal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(6px);
+  transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+}
+
+.frase.entra .pal {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.frase.sale {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.fecha {
+  margin: 10px 0 0;
+  font-size: clamp(17px, 2.3vw, 24px);
+  letter-spacing: 0.1em;
+  color: var(--marfil-suave);
+  text-shadow: 0 2px 18px rgba(7, 5, 24, 0.95);
+}
+
+/* ---------- Pantalla inicial ---------- */
+.regalo {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 60% 45% at 26% 28%, rgba(91, 42, 114, 0.4), transparent 70%),
+    radial-gradient(ellipse at 50% 46%, var(--noche-media) 0%, var(--noche) 78%);
+  transition: opacity 1.3s ease;
+}
+
+.regalo[hidden] { display: none; }
+
+.regalo.cerrado {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.orbe {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff2a8 0%, #f5b400 42%, rgba(245, 180, 0, 0) 72%);
+  box-shadow: 0 0 60px 18px rgba(245, 180, 0, 0.35);
+  animation: late 3.2s ease-in-out infinite;
+}
+
+.regalo-texto {
+  margin: 34px 0 30px;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(34px, 7vw, 62px);
+  line-height: 1.1;
+  color: var(--marfil);
+  text-shadow: 0 0 34px rgba(245, 180, 0, 0.3);
+}
+
+.abrir {
+  padding: 13px 28px;
+  border: 1px solid rgba(255, 246, 214, 0.42);
+  border-radius: 999px;
+  background: rgba(255, 246, 214, 0.07);
+  color: var(--marfil);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.abrir:hover { background: rgba(255, 246, 214, 0.16); border-color: rgba(255, 246, 214, 0.7); }
+.abrir:focus-visible { outline: 2px solid var(--oro); outline-offset: 4px; }
+
+@keyframes late {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50%      { transform: scale(1.14); opacity: 1; }
+}
+
+/* ---------- Botón de pantalla completa ---------- */
+.boton {
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 246, 214, 0.32);
+  border-radius: 50%;
+  background: rgba(255, 246, 214, 0.06);
+  color: var(--marfil);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.25s ease, background 0.25s ease;
+}
+
+.boton:hover { opacity: 1; background: rgba(255, 246, 214, 0.14); }
+.boton:focus-visible { opacity: 1; outline: 2px solid var(--oro); outline-offset: 3px; }
+.boton[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbe { animation: none; }
+  .pal { transform: none; filter: none; transition: opacity 1s ease; }
+  body.abierto .mensaje { transition: none; }
+}
